@@ -1,4 +1,4 @@
-# COMP0246_labs
+# COMP0246_labs - Lab 1 for submission
 
 This repo holds lab(s) for COMP0246. It uses ROS2 humble.
 
