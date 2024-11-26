@@ -85,7 +85,20 @@ The URDF file is a way to represent a robot. It has a series of rigid links that
 
 ### step 2
 
-Now we will implement our own forward kinematics using Denavit-Hartenberg parameters. We can find them for the Franka FR3 robot arm [here](https://frankaemika.github.io/docs/control_parameters.html#denavithartenberg-parameters) which uses the Craig convention meaning modified DH parameters. We will try to mimick the behavior we saw in step 1. The file in this repo [here](./transform_helpers/transform_helpers/main.py) has some starter code and some TODO items for you. Also the file utils.py needs some changes [here](./transform_helpers/transform_helpers/utils.py). You will need to edit the files in transform_helpers/transform_helpers in your local copy. Implement the TODO list within each file, then rebuild the package and run the `ros2 launch transform_helpers bringup.launch.py` command and in a new terminal run the program you just wrote `ros2 run transform_helpers main`.
+Now we will implement our own forward kinematics using Denavit-Hartenberg parameters. We can find them for the Franka FR3 robot arm [here](https://frankaemika.github.io/docs/control_parameters.html#denavithartenberg-parameters) which uses the Craig convention meaning modified DH parameters. We will try to mimick the behavior we saw in step 1. The file in this repo [here](./transform_helpers/transform_helpers/main.py) has some starter code and some TODO items for you. Also the file utils.py [here](./transform_helpers/transform_helpers/utils.py) needs some changes. You will need to edit the files in transform_helpers/transform_helpers in your local copy. Implement the TODO list within each file. 
+
+From here, in one terminal you will rebuild the package and run the `ros2 launch transform_helpers bringup.launch.py` command.
+```
+colcon build
+source install/setup.bash
+ros2 launch transform_helpers bringup.launch.py
+```
+
+In a second terminal you will run the code you just edited:
+```
+source install/setup.bash
+ros2 run transform_helpers main
+```
 
 From here we will change some of the RVIZ configuration, specifically the transform prefix, to point to our new transforms we are publishing. See the configuration in the below screenshot and update your rviz config to match with attention to the transform prefix as well as the fixed frame in rviz.
 
