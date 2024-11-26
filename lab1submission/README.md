@@ -5,9 +5,11 @@ This repo holds lab 1 submission for COMP0246. It uses ROS2 humble.
 ## Mac users
 We need to set up a separate environment with Python 3.10
 Run the following commands to install the new environment
-```mamba env create -f env.yml
+```
+mamba env create -f env.yml
 mamba activate roboenv-py3.10
-pip install colcon-common-extensions```
+pip install colcon-common-extensions
+```
 
 ## lab0_transforms
 
