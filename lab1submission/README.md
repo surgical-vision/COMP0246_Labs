@@ -1,4 +1,4 @@
-# COMP0246_labs - Lab 1 for submission
+# COMP0246_Labs - Lab 1 for submission
 
 This repo holds lab(s) for COMP0246. It uses ROS2 humble.
 
@@ -48,7 +48,7 @@ Try using ROS's implementation of forward kinematics for a robot arm, via the [R
 ```
 mkdir -p ros2_ws/src
 cd ros2_ws
-git clone https://github.com/MZandtheRaspberryPi/COMP0246_labs src/COMP0246
+git clone https://github.com/surgical-vision/COMP0246_Labs src/COMP0246_Labs
 colcon build
 source install/setup.bash
 ros2 launch transform_helpers bringup.launch.py
