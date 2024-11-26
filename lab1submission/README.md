@@ -33,8 +33,18 @@ Transforms and coordinate frames can be expressed as a graph with the transforms
 To be able to operate, all the data which is going to be transformed by the ‘tf’ library must contain two pieces of information: the coordinate frame in which it is represented, and the time at which it is valid. These two pieces of data are referred to as a ‘Stamp’. Data which contains the information in the ‘Stamp’ can be transformed for known data types.
 * transforms can be static without a moveable joint. These are often published to the `/tf_static` topic. They can also be dynamic, with a moveable joint, often published to the `/tf` topic.
 
-
 ### step 0
+
+Try using ROS's implementation of forward kinematics for a robot arm, via the [Robot State Publisher](https://github.com/ros/robot_state_publisher/tree/humble). The below will bring up rviz2 as well as a GUI where you can adjust the joint angles of the robot arm. Try changing the joint angles and seeing what happens to the position of the end effector!
+
+![joint_state_pub](assets/joint_state_pub.png)
+
+```
+mkdir -p ros2_ws/src
+cd ros2_ws
+git clone https://github.com/surgical-vision/COMP0246_Labs src/COMP0246_Labs
+```
+### step 1
 This lab depends on some stuff like tf2 and rviz2. rosdep documentation is available [here](https://docs.ros.org/en/rolling/Tutorials/Intermediate/Rosdep.html). You can install this via rosdep. If you haven't installed this before, install rosdep. If linux `sudo apt-get install python3-rosdep` else `pip install rosdep` may work or do your own research. 
 
 Once installed, if you've never used it:
@@ -48,16 +58,9 @@ Then to install dependencies, from the root of this repository:
 rosdep install --from-paths ./ -y --ignore-src
 ```
 
-### step 1
-
-Try using ROS's implementation of forward kinematics for a robot arm, via the [Robot State Publisher](https://github.com/ros/robot_state_publisher/tree/humble). The below will bring up rviz2 as well as a GUI where you can adjust the joint angles of the robot arm. Try changing the joint angles and seeing what happens to the position of the end effector!
-
-![joint_state_pub](assets/joint_state_pub.png)
-
+### step 1.4
+compile and run the code (hopefully successfully)
 ```
-mkdir -p ros2_ws/src
-cd ros2_ws
-git clone https://github.com/surgical-vision/COMP0246_Labs src/COMP0246_Labs
 colcon build
 source install/setup.bash
 ros2 launch transform_helpers bringup.launch.py
@@ -65,7 +68,7 @@ ros2 launch transform_helpers bringup.launch.py
 
 ### step 1.5
 
-While the default setup is running, check out the transforms by going to a new terminal and running the below. After a couple seconds this should spit out a PDF you can open to view the transform hierarchy. What is the name of the wrist joint in this hierarchy?
+While the default setup is running, check out the transforms by going to a new terminal and running the below. After a couple seconds this should spit out a PDF you can open to view the transform hierarchy. What is the name of the wrist joint in this hierarchy? Note: You can also see transforms in RViz with frame names overlaid.
 ```
 ros2 run tf2_tools view_frames
 ```
@@ -82,10 +85,12 @@ The URDF file is a way to represent a robot. It has a series of rigid links that
 
 ### step 2
 
-Now we will implement our own forward kinematics using Denavit-Hartenberg parameters. We can find them for the Franka FR3 robot arm [here](https://frankaemika.github.io/docs/control_parameters.html#denavithartenberg-parameters) which uses the Craig convention meaning modified DH parameters. We will try to mimick the behavior we saw in step 1. The file in this repo [here](./transform_helpers/transform_helpers/main.py) has some starter code and some TODO items for you. Implement this file, then rebuild the package and run the `ros2 launch transform_helpers bringup.launch.py` command and in a new terminal run the program you just wrote `ros2 run transform_helpers main`.
+Now we will implement our own forward kinematics using Denavit-Hartenberg parameters. We can find them for the Franka FR3 robot arm [here](https://frankaemika.github.io/docs/control_parameters.html#denavithartenberg-parameters) which uses the Craig convention meaning modified DH parameters. We will try to mimick the behavior we saw in step 1. The file in this repo [here](./transform_helpers/transform_helpers/main.py) has some starter code and some TODO items for you. Also the file utils.py needs some changes [here](./transform_helpers/transform_helpers/utils.py). You will need to edit the files in transform_helpers/transform_helpers in your local copy. Implement the TODO list within each file, then rebuild the package and run the `ros2 launch transform_helpers bringup.launch.py` command and in a new terminal run the program you just wrote `ros2 run transform_helpers main`.
 
 From here we will change some of the RVIZ configuration, specifically the transform prefix, to point to our new transforms we are publishing. See the configuration in the below screenshot and update your rviz config to match with attention to the transform prefix as well as the fixed frame in rviz.
 
 ![showing_rviz_config](assets/pointing_to_custom_transforms.png)
 
 Now change the joint angles in the GUI and you should be able to see the robot changes states, and now your transforms are driving this. Behavior should match Step 1, so you can check your work.
+
+Take a screenshot similar to the one above showing the robot pose and rviz settings and include this in your report.
