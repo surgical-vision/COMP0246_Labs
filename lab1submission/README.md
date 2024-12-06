@@ -81,7 +81,7 @@ ros2 topic echo --once /tf
 ```
 
 ### step 1.7
-The URDF file is a way to represent a robot. It has a series of rigid links that are connected by joints. How many links do you see in the URDF file [here](./franka_description/urdfs/fr3.urdf) and why is this more than 7, the number of joints that the robot has? [This](https://docs.ros.org/en/rolling/Tutorials/Intermediate/URDF/Building-a-Visual-Robot-Model-with-URDF-from-Scratch.html) may be helpful in background on URDF files.
+The URDF file is a way to represent a robot. It has a series of rigid links that are connected by joints. How many links do you see in the URDF file [here](../franka_description/urdfs/fr3.urdf) and why is this more than 7, the number of joints that the robot has? [This](https://docs.ros.org/en/rolling/Tutorials/Intermediate/URDF/Building-a-Visual-Robot-Model-with-URDF-from-Scratch.html) may be helpful in background on URDF files.
 
 ### step 2
 
