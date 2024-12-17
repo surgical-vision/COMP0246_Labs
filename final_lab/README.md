@@ -1,6 +1,6 @@
 # COMP0246_labs
 
-This repo holds lab(s) for COMP0246. It uses ROS2 humble. ** You will need your implementation of transform_helpers from the previous lab**
+This repo holds lab(s) for COMP0246. It uses ROS2 humble. **You will need your implementation of transform_helpers from the previous lab**
 
 ## lab1_youbot_kinematics
 For this lab, we will implement forward and inverse kinematics for the KUKA YouBot manipulator. We will then implement path planning for this robot.
