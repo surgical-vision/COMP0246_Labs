@@ -1,27 +1,27 @@
 # COMP0246_labs
 
-This repo holds lab(s) for COMP0246. It uses ROS2 humble.
+This repo holds lab(s) for COMP0246. It uses ROS2 humble. ** You will need your implementation of transform_helpers from the previous lab**
 
 ## lab1_youbot_kinematics
 For this lab, we will implement forward and inverse kinematics for the KUKA YouBot manipulator. We will then implement path planning for this robot.
 
-### Part 1
+### Part 1.a
 
 For this activity, we will need to implement methods to do forward kinematics as well as to get the jacobian and to tell whether a given pose is a singularity.
 
-#### 1.a Implement FK
+#### 1.a.i - Implement FK
 Inside the `youbot_kinematics` package please modify the `youbotKineBase.py`. There are TODO items marked to implement forward kinematics and to convert rotation matrices.
 
-#### 1.b Implement Jacobian and Singularity Methods
+#### 1.a.ii - Implement Jacobian and Singularity Methods
 Inside the `youbot_kinematics` package please modify the `youbotKineStudent.py`. There are TODO items marked to jacobian and singularity methods.
 
-To test your work from 1.a and 1.b, in one terminal run `ros2 launch youbot_kinematics bringup.launch.py` and in another terminal run `ros2 run youbot_kinematics main_student`. 
+To test your work from 1.a.i and 1.a.ii, in one terminal run `ros2 launch youbot_kinematics bringup.launch.py` and in another terminal run `ros2 run youbot_kinematics main_student`. 
 
-For 1.a you should see something like the below screenshot where the frame with the post-fix `student` is correctly tracking the end effector as you move the joint angles using the GUI.
+For 1.a.i you should see something like the below screenshot where the frame with the post-fix `student` is correctly tracking the end effector as you move the joint angles using the GUI.
 
 ![fk](assets/lab2/forward_kinematics.png)
 
-For 1.b. you should see jacobian matrices printed out in the terminal before the node starts running. You may compare your work to the below:
+For 1.a.ii you should see jacobian matrices printed out in the terminal before the node starts running. You may compare your work to the below:
 
 To test your work you may compare to the below expected output. You will also rely on this work in the next section.
 
@@ -69,11 +69,11 @@ jacobian
 ```
 
 
-### Part 2
+### Part 1.b
 For this part of the lab we will use the jacobian implementation from your earlier work to calculate inverse kinematics and trajectories.
 
-#### 1.a 
-The file `plan_trajectory.py` has many TODO items for you to implement. At a high level we are taking in target positions in joint angles, we need to calculate cartesian poses of the end effector, split these into checkpoints using decoupling techniques, and then publishing a trajectory of these checkpoints. Once you have implmeneted these methods you can visualize your work by using:
+#### 1.b
+The file `plan_trajectory.py` has many TODO items for you to implement. At a high level we are taking in target positions in joint angles, we need to calculate cartesian poses of the end effector, split these into checkpoints using decoupling techniques, and then publishing a trajectory of these checkpoints. Once you have implmented these methods you can visualize your work by using:
 
 ```
 ros2 launch youbot_kinematics bringup.launch.py
@@ -84,10 +84,10 @@ And in a second terminal:
 ros2 run youbot_kinematics plan_trajectory
 ```
 
-You should see a trajectory like the below.
+You should see a trajectory like the one below.
 ![traj](assets/lab2/markers.png)
 
-### Part 3
+### Part 1.c
 
 For this part of the lab you will implement a node that listens to your trajectory and publishes the transform to the end effector.
 
@@ -97,6 +97,6 @@ The end result is that running all three programs should result in you seeing th
 
 ![coord_frame_moving](assets/lab2/coordinate_frame_moving.png)
 
-### Part 4
+### Part 1.d
 
 Modify the `target_data.py` file, adding more targets or changing the trajectory. Run your program and ensure the end effector frame follows it. Include a screenshot of your changed trajectory and end effector frame.
