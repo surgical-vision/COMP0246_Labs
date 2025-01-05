@@ -126,18 +126,20 @@ class YoubotKinematicBase(Node):
         return A
 
     def rotmat2rodrigues(self, T):
-        """Convert rotation matrix to rodrigues vector. Done by first converting to quaternion then to rodrigues.
+        """Convert transformation matrix to rodrigues vector. Done by first converting the rotation to quaternion then
+	to rodrigues.
 
         Args:
-            T (np.ndarray): Rotation matrix to convert to rodrigues representation.
+            T (np.ndarray): 4x4 transformation matrix to convert to state vector - translation plus rodrigues rotation
+	    representation.
 
         Returns:
-            p (np.ndarray): An array for the first 5 elements specifying translation and the last three specifying
-        rotation.
+            p (np.ndarray): An array where the first 3 elements specify the translation and the last three specify the
+	    rotation.
         """
         assert isinstance(T, np.ndarray)
 
-        # TODO: Implement a method to convert from a rotation matrix to a rodrigues vector
+        # TODO: Implement a method to convert from a 4x4 transformation matrix to a translation and rodrigues vector
 
         p = np.empty(6, float)
         raise NotImplementedError
