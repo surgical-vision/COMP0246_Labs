@@ -130,7 +130,7 @@ class YoubotKinematicBase(Node):
 	to rodrigues.
 
         Args:
-            T (np.ndarray): 4x4 transformation matrix to convert to state vector - translation plus rodrigues rotation
+            T (np.ndarray): 4x4 transformation matrix to convert to pose vector - translation plus rodrigues rotation
 	    representation.
 
         Returns:
