@@ -2,15 +2,6 @@
 
 This repo holds lab 1 submission for COMP0246. It uses ROS2 humble.
 
-## Mac users
-We need to set up a separate environment with Python 3.10
-Run the following commands to install the new environment
-```
-mamba env create -f env.yml
-mamba activate roboenv-py3.10
-pip install colcon-common-extensions
-```
-
 ## lab0_transforms
 
 ![panda](assets/panda.png)
@@ -107,3 +98,4 @@ From here we will change some of the RVIZ configuration, specifically the transf
 Now change the joint angles in the GUI and you should be able to see the robot changes states, and now your transforms are driving this. Behavior should match Step 1, so you can check your work.
 
 Take a screenshot similar to the one above showing the robot pose and rviz settings and include this in your report.
+
