@@ -10,8 +10,66 @@
   <!-- kinematics: description of the kinematics that comes from a YAML file. Example definition: ${xacro.load_yaml('$(find franka_description)/robots/fr3/kinematics.yaml')} -->
   <!-- inertials: description of the inertials that comes from a YAML file. Example definition: ${xacro.load_yaml('$(find franka_description)/robots/fr3/inertials.yaml')} -->
   <!-- dynamics: description of the dynamics that comes from a YAML file. Example definition: ${xacro.load_yaml('$(find franka_description)/robots/fr3/dynamics.yaml')} -->
+  
+  <ros2_control name="fr3" type="system">
+    <hardware>
+      <plugin>mock_components/GenericSystem</plugin>
+      <param name="mock_sensor_commands">true</param>
+    </hardware>
+
+    <joint name="fr3_joint1">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="fr3_joint2">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="fr3_joint3">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="fr3_joint4">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="fr3_joint5">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="fr3_joint6">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="fr3_joint7">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
+  
   <link name="base">
-      </link>
+  </link>
   <joint name="base_joint" type="fixed">
     <parent link="base"/>
     <child link="fr3_link0"/>
@@ -35,6 +93,7 @@
       <inertia ixx="0.009" ixy="0.0" ixz="0.002" iyy="0.0115" iyz="0.0" izz="0.0085"/>
     </inertial>
   </link>
+
   <!-- sub-link defining detailed meshes for collision with environment -->
   <link name="fr3_link1">
     <visual name="fr3_link1_visual">
@@ -53,6 +112,7 @@
       <inertia ixx="0.023927316485107913" ixy="1.3317903455714081e-05" ixz="-0.00011404774918616684" iyy="0.0224821613275756" iyz="-0.0019950320628240115" izz="0.006350098258530016"/>
     </inertial>
   </link>
+  
   <joint name="fr3_joint1" type="revolute">
     <origin rpy="0 0 0" xyz="0 0 0.333"/>
     <parent link="fr3_link0"/>
@@ -88,6 +148,7 @@
     <limit effort="87.0" lower="-1.7837" upper="1.7837" velocity="2.62"/>
     <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-1.7837" soft_upper_limit="1.7837"/>
     <dynamics D="1" K="7000" damping="0.003" friction="0.2" mu_coulomb="0" mu_viscous="16"/>
+
   </joint>
   <!-- sub-link defining detailed meshes for collision with environment -->
   <link name="fr3_link3">
@@ -115,6 +176,7 @@
     <limit effort="87.0" lower="-2.9007" upper="2.9007" velocity="2.62"/>
     <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.9007" soft_upper_limit="2.9007"/>
     <dynamics D="1" K="7000" damping="0.003" friction="0.2" mu_coulomb="0" mu_viscous="16"/>
+
   </joint>
   <!-- sub-link defining detailed meshes for collision with environment -->
   <link name="fr3_link4">
@@ -142,6 +204,7 @@
     <limit effort="87.0" lower="-3.0421" upper="-0.1518" velocity="2.62"/>
     <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-3.0421" soft_upper_limit="-0.1518"/>
     <dynamics D="1" K="7000" damping="0.003" friction="0.2" mu_coulomb="0" mu_viscous="16"/>
+
   </joint>
   <!-- sub-link defining detailed meshes for collision with environment -->
   <link name="fr3_link5">
@@ -169,6 +232,7 @@
     <limit effort="12.0" lower="-2.8065" upper="2.8065" velocity="5.26"/>
     <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.8065" soft_upper_limit="2.8065"/>
     <dynamics D="1" K="7000" damping="0.003" friction="0.2" mu_coulomb="0" mu_viscous="16"/>
+
   </joint>
   <!-- sub-link defining detailed meshes for collision with environment -->
   <link name="fr3_link6">
@@ -196,6 +260,7 @@
     <limit effort="12.0" lower="0.5445" upper="4.5169" velocity="4.18"/>
     <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="0.5445" soft_upper_limit="4.5169"/>
     <dynamics D="1" K="7000" damping="0.003" friction="0.2" mu_coulomb="0" mu_viscous="16"/>
+
   </joint>
   <!-- sub-link defining detailed meshes for collision with environment -->
   <link name="fr3_link7">
@@ -223,6 +288,7 @@
     <limit effort="12.0" lower="-3.0159" upper="3.0159" velocity="5.26"/>
     <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-3.0159" soft_upper_limit="3.0159"/>
     <dynamics D="1" K="7000" damping="0.003" friction="0.2" mu_coulomb="0" mu_viscous="16"/>
+
   </joint>
   <link name="fr3_link8"/>
   <joint name="fr3_joint8" type="fixed">
