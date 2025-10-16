@@ -17,12 +17,12 @@ From here, download the repo.
 
 ```
 cd ~
-git clone https://github.com/surgical-vision/COMP0246_labs
+git clone https://github.com/surgical-vision/COMP0246_Labs
 ```
 
 And run the docker image taking care to pass the repo to the ros workspace and to let docker access your GUI interfaces to be able to see RVIZ2. Users with ARM processors may need to use the docker image `ghcr.io/sloretz/ros:humble-desktop-full` which supports ARM Processors ([here](https://github.com/sloretz/ros_oci_images)) instead of the official ROS2 docker image `osrf/ros:humble-desktop-full`. If you have ROS2 installed natively you can also run the activities using that install instead of docker, for users unfamiliar with docker this may be easier.
 ```
-xhost +local:root && docker run -it --rm -v $HOME/COMP0246_labs:/home/ros_ws/src/COMP0246_labs --env="DISPLAY" \
+xhost +local:root && docker run -it --rm -v $HOME/COMP0246_Labs:/home/ros_ws/src/COMP0246_Labs --env="DISPLAY" \
     --env="QT_X11_NO_MITSHM=1" \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
     osrf/ros:humble-desktop-full && xhost -local:root
