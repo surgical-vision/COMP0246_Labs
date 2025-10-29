@@ -11,7 +11,8 @@ class YoubotKinematicStudent(YoubotKinematicBase):
     def __init__(self):
         super(YoubotKinematicStudent, self).__init__(tf_suffix='student')
 
-        # Set the offset for theta
+        # Set the offset for theta --> This was updated on 22/11/2024. Fill it in with your calculated joint offsets in cw1 if you need testing.
+        # the standard joint offsets will be updated soon.
         youbot_joint_offsets = [170.0 * np.pi / 180.0,
                                 -65.0 * np.pi / 180.0,
                                 146 * np.pi / 180,
@@ -71,14 +72,12 @@ class YoubotKinematicStudent(YoubotKinematicBase):
         assert isinstance(joint, list)
         assert len(joint) == 5
 
-        # TODO: create the jacobian matrix
-
         # Your code starts here ----------------------------
 
         # For your solution to match the KDL Jacobian, z0 needs to be set [0, 0, -1] instead of [0, 0, 1], since that is how its defined in the URDF.
         # Both are correct.
         # Your code starts here ----------------------------
-        raise NotImplementedError
+       
         # Your code ends here ------------------------------
         assert jacobian.shape == (6, 5)
         return jacobian
@@ -96,9 +95,8 @@ class YoubotKinematicStudent(YoubotKinematicBase):
         """
         assert isinstance(joint, list)
         assert len(joint) == 5
-        # TODO: Implement this
         # Your code starts here ----------------------------
-        raise NotImplementedError
+
         # Your code ends here ------------------------------
         assert isinstance(singularity, bool)
         return singularity

@@ -120,27 +120,24 @@ class YoubotKinematicBase(Node):
         A = np.zeros((4, 4))
 
         # TODO: implement a method to get the transform matrix using DH Parameters
-        raise NotImplementedError
+      
+
         assert isinstance(A, np.ndarray), "Output wasn't of type ndarray"
         assert A.shape == (4, 4), "Output had wrong dimensions"
         return A
 
     def rotmat2rodrigues(self, T):
-        """Convert transformation matrix to rodrigues vector. Done by first converting the rotation to quaternion then
-	to rodrigues.
+        """Convert rotation matrix to rodrigues vector. Done by first converting to quaternion then to rodrigues.
 
         Args:
-            T (np.ndarray): 4x4 transformation matrix to convert to pose vector - translation plus rodrigues rotation
-	    representation.
+            T (np.ndarray): Rotation matrix to convert to rodrigues representation.
 
         Returns:
-            p (np.ndarray): An array where the first 3 elements specify the translation and the last three specify the
-	    rotation.
+            p (np.ndarray): An array for the first 5 elements specifying translation and the last three specifying
+        rotation.
         """
         assert isinstance(T, np.ndarray)
 
-        # TODO: Implement a method to convert from a 4x4 transformation matrix to a translation and rodrigues vector
+        # TODO: Implement a method to convert from a rotation matrix to a rodrigues vector
 
-        p = np.empty(6, float)
-        raise NotImplementedError
         return p

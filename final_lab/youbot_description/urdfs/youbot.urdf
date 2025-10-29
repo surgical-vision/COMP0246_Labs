@@ -34,6 +34,64 @@
   <gazebo>
     <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_controller"/>
   </gazebo>
+
+  <ros2_control name="youbot" type="system">
+    <hardware>
+      <plugin>mock_components/GenericSystem</plugin>
+      <param name="mock_sensor_commands">true</param>
+    </hardware>
+
+    <joint name="arm_joint_1">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="arm_joint_2">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="arm_joint_3">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="arm_joint_4">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="arm_joint_5">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="gripper_finger_joint_r">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="gripper_finger_joint_l">
+      <command_interface name="position"/>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
+
   <!-- Now we can start using the macros included above to define the actual youbot -->
   <!-- The first use of a macro.  This one was defined in base.urdf.xacro above.
        A macro like this will expand to a set of link and joint definitions, and to additional

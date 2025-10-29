@@ -16,14 +16,15 @@ from youbot_kinematics.target_data import TARGET_JOINT_POSITIONS
 class YoubotTrajectoryPlanning(Node):
     def __init__(self):
         # Initialize node
-        super().__init__('youbot_trajectory_planner')
+        super().__init__("youbot_trajectory_planner")
 
         # Save question number for check in main run method
         self.kdl_youbot = YoubotKinematicStudent()
 
         # Create trajectory publisher and a checkpoint publisher to visualize checkpoints
-        self.traj_pub = self.create_publisher(JointTrajectory, '/EffortJointInterface_trajectory_controller/command',
-                                        5)
+        self.traj_pub = self.create_publisher(
+            JointTrajectory, "/youbot_arm_controller/joint_trajectory", 5
+        )
         self.checkpoint_pub = self.create_publisher(Marker, "checkpoint_positions", 100)
 
     def run(self):
@@ -35,11 +36,17 @@ class YoubotTrajectoryPlanning(Node):
         time.sleep(2.0)
         traj = self.q6()
         traj.header.stamp = self.get_clock().now().to_msg()
-        traj.joint_names = ["arm_joint_1", "arm_joint_2", "arm_joint_3", "arm_joint_4", "arm_joint_5"]
+        traj.joint_names = [
+            "arm_joint_1",
+            "arm_joint_2",
+            "arm_joint_3",
+            "arm_joint_4",
+            "arm_joint_5",
+        ]
         self.traj_pub.publish(traj)
 
     def q6(self):
-        """ This is the main q6 function. Here, other methods are called to create the shortest path required for this
+        """This is the main q6 function. Here, other methods are called to create the shortest path required for this
         question. Below, a general step-by-step is given as to how to solve the problem.
         Returns:
             traj (JointTrajectory): A list of JointTrajectory points giving the robot joint positions to achieve in a
@@ -55,7 +62,6 @@ class YoubotTrajectoryPlanning(Node):
         # 5. Create a JointTrajectory message.
 
         # Your code starts here ------------------------------
-        raise NotImplementedError
 
         # Your code ends here ------------------------------
 
@@ -76,17 +82,21 @@ class YoubotTrajectoryPlanning(Node):
         # Initialize arrays for checkpoint transformations and joint positions
         target_joint_positions = np.zeros((5, num_target_positions + 1))
         # Create a 4x4 transformation matrix, then stack 6 of these matrices together for each checkpoint
-        target_cart_tf = np.repeat(np.identity(4), num_target_positions + 1, axis=1).reshape((4, 4, num_target_positions + 1))
+        target_cart_tf = np.repeat(
+            np.identity(4), num_target_positions + 1, axis=1
+        ).reshape((4, 4, num_target_positions + 1))
 
         # Get the current starting position of the robot
         target_joint_positions[:, 0] = self.kdl_youbot.current_joint_position
         # Initialize the first checkpoint as the current end effector position
-        target_cart_tf[:, :, 0] = self.kdl_youbot.forward_kinematics(target_joint_positions[:, 0].tolist())
+        target_cart_tf[:, :, 0] = self.kdl_youbot.forward_kinematics(
+            target_joint_positions[:, 0].tolist()
+        )
 
         # TODO: populate the transforms in the target_cart_tf object
         # populate the joint positions in the target_joint_positions object
         # Your code starts here ------------------------------
-        raise NotImplementedError
+
         # Your code ends here ------------------------------
 
         self.get_logger().info(f"{target_cart_tf.shape} target poses")
@@ -96,7 +106,6 @@ class YoubotTrajectoryPlanning(Node):
         assert target_joint_positions.shape == (5, num_target_positions + 1)
 
         return target_cart_tf, target_joint_positions
-        
 
     def get_shortest_path(self, checkpoints_tf):
         """This function takes the checkpoint transformations and computes the order of checkpoints that results
@@ -111,8 +120,7 @@ class YoubotTrajectoryPlanning(Node):
         num_checkpoints = checkpoints_tf.shape[2]
         # TODO: implement this method. Make it flexible to accomodate different numbers of targets.
         # Your code starts here ------------------------------
-        # Sort the shortest distance and permutation here
-        raise NotImplementedError
+       
         # Your code ends here ------------------------------
 
         assert isinstance(sorted_order, np.ndarray)
@@ -132,7 +140,7 @@ class YoubotTrajectoryPlanning(Node):
             marker = Marker()
             marker.id = id
             id += 1
-            marker.header.frame_id = 'base_link'
+            marker.header.frame_id = "base_link"
             marker.header.stamp = self.get_clock().now().to_msg()
             marker.type = marker.SPHERE
             marker.action = marker.ADD
@@ -149,8 +157,10 @@ class YoubotTrajectoryPlanning(Node):
             marker.pose.position.z = tfs[2, -1, i]
             self.checkpoint_pub.publish(marker)
 
-    def intermediate_tfs(self, sorted_checkpoint_idx, target_checkpoint_tfs, num_points):
-        """This function takes the target checkpoint transforms and the desired order based on the shortest path sorting, 
+    def intermediate_tfs(
+        self, sorted_checkpoint_idx, target_checkpoint_tfs, num_points
+    ):
+        """This function takes the target checkpoint transforms and the desired order based on the shortest path sorting,
         and calls the decoupled_rot_and_trans() function.
         Args:
             sorted_checkpoint_idx (list): List describing order of checkpoints to follow.
@@ -162,9 +172,9 @@ class YoubotTrajectoryPlanning(Node):
         """
         # TODO: implement this
         # Your code starts here ------------------------------
-        raise NotImplementedError
+     
         # Your code ends here ------------------------------
-       
+
         return full_checkpoint_tfs
 
     def decoupled_rot_and_trans(self, checkpoint_a_tf, checkpoint_b_tf, num_points):
@@ -184,12 +194,12 @@ class YoubotTrajectoryPlanning(Node):
         self.get_logger().info(str(checkpoint_b_tf))
         # TODO: implement this
         # Your code starts here ------------------------------
-        raise NotImplementedError
+
         # Your code ends here ------------------------------
         return tfs
 
     def full_checkpoints_to_joints(self, full_checkpoint_tfs, init_joint_position):
-        """This function takes the full set of checkpoint transformations, including intermediate checkpoints, 
+        """This function takes the full set of checkpoint transformations, including intermediate checkpoints,
         and computes the associated joint positions by calling the ik_position_only() function.
         Args:
             full_checkpoint_tfs (np.ndarray, 4x4xn): 4x4xn transformations describing all the desired poses of the end-effector
@@ -201,7 +211,7 @@ class YoubotTrajectoryPlanning(Node):
         """
         # TODO: Implement this
         # Your code starts here ------------------------------
-        raise NotImplementedError
+
         # Your code ends here ------------------------------
 
         return q_checkpoints
@@ -223,8 +233,6 @@ class YoubotTrajectoryPlanning(Node):
 
         # Your code starts here ------------------------------
 
-        raise NotImplementedError
-        
         # Your code ends here ------------------------------
 
         return q, error
@@ -239,7 +247,6 @@ def main(args=None):
 
     rclpy.spin(youbot_planner)
 
-
     # Destroy the node explicitly
     # (optional - otherwise it will be done automatically
     # when the garbage collector destroys the node object)
@@ -247,5 +254,5 @@ def main(args=None):
     rclpy.shutdown()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

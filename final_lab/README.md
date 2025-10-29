@@ -1,27 +1,56 @@
-# COMP0246_labs
+# COMP0246_Labs
 
-This repo holds lab(s) for COMP0246. It uses ROS2 humble. **You will need your implementation of transform_helpers from the previous lab**
+This repo holds lab(s) for COMP0246. It uses ROS2 humble.
 
-## lab1_youbot_kinematics
-For this lab, we will implement forward and inverse kinematics for the KUKA YouBot manipulator. We will then implement path planning for this robot.
+## Final Lab - YouBot_kinematics
+For this lab, we will implement forward and inverse kinematics for the KUKA YouBot manipulator. We will use this for a trajectory planning task.
 
-### Part 1.a
+You may use KDL to check some steps, that said note that we will implement from scratch FK and IK.
+
+### Part 0
+
+Please follow similar setup steps from lab2 (https://github.com/surgical-vision/COMP0246_Labs/tree/main/Lab2).
+
+### Part 1
 
 For this activity, we will need to implement methods to do forward kinematics as well as to get the jacobian and to tell whether a given pose is a singularity.
 
-#### 1.a.i - Implement FK
+#### 1.a Implement FK
 Inside the `youbot_kinematics` package please modify the `youbotKineBase.py`. There are TODO items marked to implement forward kinematics and to convert rotation matrices.
 
-#### 1.a.ii - Implement Jacobian and Singularity Methods
+#### 1.b Implement Jacobian and Singularity Methods
 Inside the `youbot_kinematics` package please modify the `youbotKineStudent.py`. There are TODO items marked to jacobian and singularity methods.
 
-To test your work from 1.a.i and 1.a.ii, in one terminal run `ros2 launch youbot_kinematics bringup.launch.py` and in another terminal run `ros2 run youbot_kinematics main_student`. 
+To test your work from 1.a and 1.b, build the package. If using Docker:
 
-For 1.a.i you should see something like the below screenshot where the frame with the post-fix `student` is correctly tracking the end effector as you move the joint angles using the GUI.
+```
+xhost +local:root && docker run -it --rm -v $HOME/COMP0246_Labs:/home/ros_ws/src/COMP0246_Labs --env="DISPLAY" \
+    --env="QT_X11_NO_MITSHM=1" \
+    --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+    osrf/ros:humble-desktop-full && xhost -local:root
+sudo apt-get update && sudo apt-get install ros-humble-python-orocos-kdl-vendor ros-humble-orocos-kdl-vendor ros-humble-kdl-parser ros-humble-joint-state-publisher-gui ros-humble-controller-manager ros-humble-joint-trajectory-controller ros-humble-joint-state-broadcaster ros-humble-ros2-control ros-humble-ros2-controllers 
+cd home/ros_ws
+colcon build --symlink-install
+source install/setup.bash
+```
+
+From here, in one terminal run `ros2 launch youbot_kinematics bringup.launch.py`.
+
+To bring up another terminal in the docker container, open a terminal on the host:
+
+```
+docker exec -it $(docker ps -lq) bash
+cd home/ros_ws
+source install/setup.bash
+```
+
+and in the other terminal run `ros2 run youbot_kinematics main_student`. 
+
+For 1.a you should see something like the below screenshot where the frame with the post-fix `student` is correctly tracking the end effector as you move the joint angles using the GUI.
 
 ![fk](assets/lab2/forward_kinematics.png)
 
-For 1.a.ii you should see jacobian matrices printed out in the terminal before the node starts running. You may compare your work to the below:
+For 1.b. you should see jacobian matrices printed out in the terminal before the node starts running. You may compare your work to the below:
 
 To test your work you may compare to the below expected output. You will also rely on this work in the next section.
 
@@ -69,14 +98,13 @@ jacobian
 ```
 
 
-### Part 1.b
+### Part 2
 For this part of the lab we will use the jacobian implementation from your earlier work to calculate inverse kinematics and trajectories.
 
-#### 1.b
-The file `plan_trajectory.py` has many TODO items for you to implement. At a high level we are taking in target positions in joint angles, we need to calculate cartesian poses of the end effector, split these into checkpoints using decoupling techniques, and then publishing a trajectory of these checkpoints. Once you have implmented these methods you can visualize your work by using:
+The file `plan_trajectory.py` has many TODO items for you to implement. At a high level we are taking in target positions in joint angles, we need to calculate cartesian poses of the end effector, split these into checkpoints using decoupling techniques, and then publishing a trajectory of these checkpoints. Once you have implmeneted these methods you can visualize your work by using:
 
 ```
-ros2 launch youbot_kinematics bringup.launch.py
+ros2 launch youbot_kinematics bringup.launch.py use_jspg:=false
 ```
 
 And in a second terminal:
@@ -84,19 +112,19 @@ And in a second terminal:
 ros2 run youbot_kinematics plan_trajectory
 ```
 
-You should see a trajectory like the one below.
+You should see a trajectory like the below.
 ![traj](assets/lab2/markers.png)
 
-### Part 1.c
+### Part 3
 
 For this part of the lab you will implement a node that listens to your trajectory and publishes the transform to the end effector.
 
-To do this, create a new node in the `youbot_kinematics` package. This node should listen to the `JointTrajectory` messages that you publish from the `plan_trajectory` node and then use the `YoubotTrajectoryFollower` to do forward kinematics on the joint positions, wait an appropriate time between checkpoints, and then publish the transform. For this section the tutorial [here](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html) may come in handy.
+To do this, create a new node in the `youbot_kinematics` package. This node should listen to the `JointState` messages that are published from the robot's controller and then use the `YoubotTrajectoryFollower` to do forward kinematics on the joint positions and then publish the transform. For this section the tutorial [here](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html) may come in handy.
 
-The end result is that running all three programs should result in you seeing the coordinate frame of the end effector follow the waypoints, though the robot model will not move. We do not publish intermediate transforms for the robot model, because we do not align our DH frames with the robot model frames.
+The end result is that running all three programs should result in you seeing the coordinate frame of the end effector follow the waypoints, as well as the robot.
 
 ![coord_frame_moving](assets/lab2/coordinate_frame_moving.png)
 
-### Part 1.d
+### Part 4
 
 Modify the `target_data.py` file, adding more targets or changing the trajectory. Run your program and ensure the end effector frame follows it. Include a screenshot of your changed trajectory and end effector frame.
